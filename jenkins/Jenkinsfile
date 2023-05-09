@@ -18,6 +18,13 @@ pipeline {
                 }
             }
         }
+        stage('Scan') {
+            steps {
+                withSonarQubeEnv(installationName: 'sq1') { 
+                    sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
+                }
+            }
+        }
         stage('Deliver') {
             steps {
                 sh './jenkins/scripts/deliver.sh'
@@ -38,7 +45,7 @@ pipeline {
                             protocol: 'http',
                             nexusUrl: '65.0.128.192:8081',
                             groupId: 'pom.com.mycompany.app',
-                            version: 'pom.3.0-SNAPSHOT',
+                            version: 'pom.4.0-SNAPSHOT',
                             repository: 'maven-central-repository',
                             credentialsId: 'NEXUS_CRED',
                             artifacts: [
