@@ -65,5 +65,26 @@ pipeline {
                 }
             }
         }
+        stage('Push image to Hub'){
+            steps{
+                script{
+                   withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
+                   sh 'docker login -u ranjanvivek -p ${dockerhubpwd}'
+                   }
+                   sh 'docker push ranjanvivek/hello-world'
+                }
+            }
+        }
+        stage('Pull image and run container'){
+            steps{
+                script{
+                   withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
+                        sh 'docker login -u ranjanvivek -p ${dockerhubpwd}'
+                   }
+                   /*sh 'docker pull ranjanvivek/devops-integration'*/
+                   sh 'docker container run -d --name=app1 ranjanvivek/hello-world'
+                }
+            }
+        }
     }
 }
