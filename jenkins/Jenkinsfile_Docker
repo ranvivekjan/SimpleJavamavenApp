@@ -26,6 +26,17 @@ pipeline {
                 }
             }
         }
+        stage('Pull image and run container'){
+            steps{
+                script{
+                   withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
+                        sh 'docker login -u ranjanvivek -p ${dockerhubpwd}'
+                   }
+                   sh 'docker pull ranjanvivek/devops-integration'
+                   sh 'docker container run -d --name=app ranjanvivek/devops-integration'
+                }
+            }
+        }
         /*stage('Deploy to k8s'){
             steps{
                 script{
