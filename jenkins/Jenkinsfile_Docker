@@ -12,7 +12,7 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t ranjanvivek/myapp .'
+                    sh 'docker build -t ranjanvivek/devops-integration .'
                 }
             }
         }
@@ -22,7 +22,7 @@ pipeline {
                    withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
                    sh 'docker login -u ranjanvivek -p ${dockerhubpwd}'
                    }
-                   sh 'docker push ranjanvivek/my-app'
+                   sh 'docker push ranjanvivek/devops-integration'
                 }
             }
         }
