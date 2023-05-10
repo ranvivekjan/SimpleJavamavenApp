@@ -4,10 +4,9 @@ pipeline {
         maven 'maven_3_5_0'
     }*/
     stages{
-        stage('Build Maven'){
-            steps{
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/ranvivekjan/SimpleJavamavenApp']]])
-                sh 'mvn clean install'
+        stage('Build') {
+            steps {
+                sh 'mvn -B -DskipTests clean package'
             }
         }
         stage('Build docker image'){
