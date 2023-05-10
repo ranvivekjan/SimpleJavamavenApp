@@ -18,11 +18,6 @@ pipeline {
                 }
             }
         }
-        stage('Deliver') {
-            steps {
-                sh './jenkins/scripts/deliver.sh'
-            }
-        }
         stage('Scan') {
             steps {
                 withSonarQubeEnv('sq1') {
@@ -30,7 +25,12 @@ pipeline {
                 }
             }
         }
-        stage("Publish to Nexus Repository Manager") {
+        stage('Deliver') {
+            steps {
+                sh './jenkins/scripts/deliver.sh'
+            }
+        }
+        stage("Publish to Nexus") {
             steps {
                 script {
                     pom = readMavenPom file: "pom.xml";
