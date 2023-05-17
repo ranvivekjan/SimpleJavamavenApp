@@ -32,7 +32,7 @@ pipeline {
                    withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
                         sh 'docker login -u ranjanvivek -p ${dockerhubpwd}'
                    }
-                   /*sh 'docker pull ranjanvivek/devops-integration'*/
+                   //sh 'docker pull ranjanvivek/devops-integration'
                    sh 'docker container run -d --name=app ranjanvivek/hello-world'
                 }
             }
@@ -43,6 +43,20 @@ pipeline {
                     kubernetesDeploy (configs: 'deploymentservice.yaml',kubeconfigId: 'k8sconfigpwd')
                 }
             }
-        }*/
+        }
+        stage('Deploy App on k8s') {
+		    steps {
+			    sshagent(['k8s']) {
+				    //sh "scp -o StrictHostKeyChecking=no deploymentservice.yaml ubuntu@65.0.55.243:/home/ubuntu"
+				    script {
+					    try{
+						    sh "ssh ubuntu@65.0.55.243 kubectl create -f ./deploymentservice.yaml"
+					    }catch(error){
+						    sh "ssh ubuntu@65.0.55.243 kubectl create -f ./deploymentservice.yaml"
+					    }
+				    }
+			    }  
+		    }
+	    }*/
     }
 }
