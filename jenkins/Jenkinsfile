@@ -99,9 +99,9 @@ pipeline {
 				    //sh "scp -o StrictHostKeyChecking=no deploymentservice.yaml ubuntu@65.0.55.243:/home/ubuntu"
 				    script {
 					    try{
-						    sh "ssh ubuntu@65.0.55.243 kubectl create -f ./deploymentservice.yaml"
+						    sh "ssh ubuntu@65.0.55.243 kubectl create -f ./deploymentservice2.yaml"
 					    }catch(error){
-						    sh "ssh ubuntu@65.0.55.243 kubectl create -f ./deploymentservice.yaml"
+						    sh "ssh ubuntu@65.0.55.243 kubectl create -f ./deploymentservice2.yaml"
 					    }
 				    }
 			    }  
