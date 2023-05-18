@@ -68,7 +68,7 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -it ranjanvivek/hello-world .'
+                    sh 'docker build -t ranjanvivek/hello-world .'
                 }
             }
         }
