@@ -1,6 +1,4 @@
 FROM openjdk:8
 EXPOSE 8080
 ADD target/my-app-4.0-SNAPSHOT.jar hello-world.jar
-ENTRYPOINT ["java","-jar","/hello-world.jar"]
-CMD ["tail", "-f", "/dev/null"]
-RUN SLEEP 60
+ENTRYPOINT ["java","-jar","/hello-world.jar","tail", "-f", "/dev/null"]
