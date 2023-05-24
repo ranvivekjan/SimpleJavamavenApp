@@ -101,7 +101,7 @@ pipeline {
 					    try{
 						    sh "ssh ubuntu@65.0.55.243 kubectl create -f ./deploymentservice2.yaml"
 					    }catch(error){
-						    sh "ssh ubuntu@65.0.55.243 kubectl create -f ./deploymentservice2.yaml"
+						    sh "ssh ubuntu@65.0.55.243 kubectl apply -f ./deploymentservice2.yaml"
 					    }
 				    }
 			    }  
