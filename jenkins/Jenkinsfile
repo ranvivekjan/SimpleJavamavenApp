@@ -3,7 +3,7 @@ pipeline {
         label 'k8-node'
     }
     stages {
-        stage('Build') {
+        stage('BuildMavenJar') {
             steps {
                 sh 'mvn -B -DskipTests clean package'
             }
@@ -18,14 +18,14 @@ pipeline {
                 }
             }
         }
-        stage('Scan') {
+        stage('SonarScan') {
             steps {
                 withSonarQubeEnv('sq1') {
                     sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
                 }
             }
         }
-        stage('Deliver') {
+        stage('Deliver-executeJava') {
             steps {
                 sh './jenkins/scripts/deliver.sh'
             }
@@ -72,7 +72,7 @@ pipeline {
                 }
             }
         }
-        stage('Push image to Hub'){
+        stage('Push image to DockerHub'){
             steps{
                 script{
                    withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
