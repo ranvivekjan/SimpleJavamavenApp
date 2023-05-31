@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'k8-node'
+        label 'java-build-node'
     }
     stages {
         stage('BuildMavenJar') {
@@ -18,19 +18,19 @@ pipeline {
                 }
             }
         }
-        stage('SonarScan') {
+        /*stage('SonarScan') {
             steps {
                 withSonarQubeEnv('sq1') {
                     sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
                 }
             }
-        }
+        }*/
         stage('Deliver-executeJava') {
             steps {
                 sh './jenkins/scripts/deliver.sh'
             }
         }
-        stage("Publish to Nexus") {
+        /*stage("Publish to Nexus") {
             steps {
                 script {
                     pom = readMavenPom file: "pom.xml";
@@ -93,7 +93,7 @@ pipeline {
                 }
             }
         } */
-        stage('Deploy App on k8s') {
+        /*stage('Deploy App on k8s') {
 		    steps {
 			    sshagent(['k8s']) {
 				    sh "scp -o StrictHostKeyChecking=no deploymentservice2.yaml ubuntu@65.0.55.243:/home/ubuntu"
@@ -106,6 +106,6 @@ pipeline {
 				    }
 			    }  
 		    }
-	    }
+	    }*/
     }
 }
