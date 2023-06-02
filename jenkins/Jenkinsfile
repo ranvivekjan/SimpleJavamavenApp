@@ -107,5 +107,13 @@ pipeline {
 			    }  
 		    }
 	    }*/
+	stage( 'SharedLibraryExample') {
+		steps {
+			helloAll()
+			helloDay("All","2nd June")
+			helloWorld(name:"All",dayOfWeek:"Friday")
+			helloWorld(dayOfWeek:"Friday",name:"Team")
+		}
+	}
     }
 }
