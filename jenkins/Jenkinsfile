@@ -4,6 +4,14 @@ pipeline {
         label 'java-build-node'
     }
     stages {
+	stage('Check Out') {
+            steps {
+                checkOut(
+                    branch: "master",
+                    url: "https://github.com/ranvivekjan/SimpleJavamavenApp.git"
+                )
+            }
+        }
         stage('BuildMavenJar') {
             steps {
                 sh 'mvn -B -DskipTests clean package'
