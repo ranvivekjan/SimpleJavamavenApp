@@ -6,7 +6,7 @@ pipeline {
     stages {
 	stage('Check Out') {
             steps {
-                checkOut(
+           	gitCheckOut(
                     branch: "master",
                     url: "https://github.com/ranvivekjan/SimpleJavamavenApp.git"
                 )
