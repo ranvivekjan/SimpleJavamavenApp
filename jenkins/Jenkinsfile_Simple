@@ -1,4 +1,4 @@
-@Library("shared-library") _
+//@Library("shared-library") _
 pipeline {
     agent {
         label 'java-build-node'
@@ -108,13 +108,13 @@ pipeline {
 			    }  
 		    }
 	    }*/
-	stage( 'SharedLibraryExample') {
+	/*stage( 'SharedLibraryExample') {
 		steps {
 			helloAll()
 			helloDay("All","2nd June")
 			helloWorld(name:"All",dayOfWeek:"Friday")
 			helloWorld(dayOfWeek:"Friday",name:"Team")
 		}
-	}
+	}*/
     }
 }
