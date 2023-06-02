@@ -4,7 +4,7 @@ pipeline {
         label 'java-build-node'
     }
     stages {
-	stage('Check Out') {
+	stage('Git Check Out') {
             steps {
            	gitCheckOut(
                     branch: "master",
