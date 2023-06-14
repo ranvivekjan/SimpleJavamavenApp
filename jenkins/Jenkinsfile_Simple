@@ -3,6 +3,13 @@ pipeline {
     agent {
         label 'java-build-node'
     }
+    /*environment {
+    	AWS_ACCOUNT_ID="283046089760"
+        AWS_DEFAULT_REGION="ap-south-1"
+        IMAGE_REPO_NAME="jenkins-pipeline-build-demo"
+        IMAGE_TAG="latest"
+        REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
+    }*/
     stages {
         stage('BuildMavenJar') {
             steps {
@@ -19,19 +26,19 @@ pipeline {
                 }
             }
         }
-        /*stage('SonarScan') {
+        stage('SonarScan') {
             steps {
                 withSonarQubeEnv('sq1') {
                     sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
                 }
             }
-        }*/
+        }
         stage('Deliver-executeJava') {
             steps {
                 sh './jenkins/scripts/deliver.sh'
             }
         }
-        /*stage("Publish to Nexus") {
+        stage("Publish to Nexus") {
             steps {
                 script {
                     pom = readMavenPom file: "pom.xml";
@@ -73,6 +80,12 @@ pipeline {
                 }
             }
         }
+        /*stage('Logging into AWS ECR') {
+            steps {
+                script {
+                sh "aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
+            }
+	}*/
         stage('Push image to DockerHub'){
             steps{
                 script{
@@ -83,7 +96,7 @@ pipeline {
                 }
             }
         }
-        /*stage('Pull image and run container'){
+        stage('Pull image and run container'){
             steps{
                 script{
                    withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
@@ -93,8 +106,8 @@ pipeline {
                    sh 'docker container run -d --name=app1 ranjanvivek/hello-world'
                 }
             }
-        } */
-        /*stage('Deploy App on k8s') {
+        } 
+        stage('Deploy App on k8s') {
 		    steps {
 			    sshagent(['k8s']) {
 				    sh "scp -o StrictHostKeyChecking=no deploymentservice2.yaml ubuntu@65.0.55.243:/home/ubuntu"
@@ -107,14 +120,14 @@ pipeline {
 				    }
 			    }  
 		    }
-	    }*/
-	/*stage( 'SharedLibraryExample') {
+	}
+	stage( 'SharedLibraryExample') {
 		steps {
 			helloAll()
 			helloDay("All","2nd June")
 			helloWorld(name:"All",dayOfWeek:"Friday")
 			helloWorld(dayOfWeek:"Friday",name:"Team")
 		}
-	}*/
+	}
     }
 }
